@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+    {% if rlist %}
+        {% for list in rlist %}
+            <div>
+                <div class="panel" style="border-color: #ccc">
+                    <div class="panel-body" style="padding-left: 15px;padding-bottom: 5px;padding-top: 10px;">
+                        <div>
+                            <b><a href="/report/{{ list.id }}">{{ list.title }}</a></b>
+                        </div>
+                        <div style="font-size:11px;color: #919191;padding-top: 5px;">
+                            {{ list.creation_date|date:"d-m-Y G:i" }} | {{ list.creator }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-danger">
+            Список сообщений пуст!
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

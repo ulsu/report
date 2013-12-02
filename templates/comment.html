@@ -1,0 +1,21 @@
+    <div class="comment" style="margin-left: 15px;">
+
+        <div class="panel" style=" margin: 0;margin-bottom: 3px;">
+                <div class="panel-body" style="padding-bottom: 0; padding-top: 5px;">
+                    {{ comment.text|safe }}
+                </div>
+                <div class="panel-footer" style="font-size:11px;color: #919191;padding-top: 0;padding-bottom: 10px;border:0;background-color: #fff;">
+                    {{ comment.creation_date|date:"d-m-Y G:i" }} |
+                    {{ comment.author }}
+                </div>
+            <hr style="margin: 0;border-color: #ccc;">
+        </div>
+            {% if comment.children.all %}
+                {% for c in comment.children.all %}
+                    {% with comment=c template_name='comment.html'%}
+                        {% include template_name %}
+                    {% endwith %}
+                {% endfor %}
+            {% endif %}
+
+    </div>

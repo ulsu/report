@@ -1,0 +1,16 @@
+<div data-formset-form class="data-formset-form panel panel-default" style="padding: 10px;margin-bottom: 10px;width: 604px;" xmlns="http://www.w3.org/1999/html">
+    <div style="width:300px;float: left;">
+        {{ form.media_file }}
+    </div>
+        {{ form.id }}
+    <div style="width:110px;float:left;">
+        {{ form.is_infected }} {{ form.is_infected.label }}
+        <span style="display:none;">{{ form.DELETE }}</span>
+    </div>
+    <div style="float: right;margin-top: -8px; margin-right: -5px;">
+        <a data-formset-delete-button class="data-formset-delete-button">
+            <img src="{{ STATIC_URL }}img/delete.png" width="16"/>
+        </a>
+    </div>
+    <div style="clear:both;"></div>
+</div>

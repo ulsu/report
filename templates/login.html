@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Вход</title>
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/bootstrap-theme.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/jquery.1.9.0.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#alert').hide();
+        })
+    </script>
+</head>
+<body>
+<div class="panel panel-default" style="width:500px;margin: 0 auto; margin-top: 50px;">
+    <div class="panel-heading" style="text-align: center;">Авторизация</div>
+    <div class="panel-body">
+        <div class="alert alert-danger" id="alert">...</div>
+        <form method="POST" action="/account/login/auth/">
+            <div class="input-group" style="margin: 0 auto;padding-bottom:5px;">
+                <span class="input-group-addon" style="width: 70px;">Логин</span>
+                <input type="text" class="form-control" placeholder="" name="username">
+            </div>
+            <div class="input-group" style="margin: 0 auto;padding-bottom:5px;">
+                <span class="input-group-addon" style="width: 70px;">Пароль</span>
+                <input type="password" class="form-control" placeholder="" name="password">
+            </div>
+            <input type="submit" value="Вход" class="btn btn-block btn-primary" style="width: 220px; margin:0 auto;margin-top:10px;"><br>
+            {% csrf_token %}
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("div#formset").formset();
+        });
+    </script>
+{% endblock %}
+
+{% block css %}
+    <style type="text/css">
+        .form_create_report ul{
+            list-style: none;
+            padding: 0;
+        }
+        .left-align{
+            float: left;
+        }
+        p{
+            padding: 0;
+            margin: 0;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        textarea{
+            width: 630px!important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+ <div class="panel" style="border-color: #ccc">
+    <div class="panel-heading" style="font-size: 16px; font-weight: bold;border-color: #ccc;">Создание сообщения</div>
+    <div class="panel-body">
+         <div style="width:600px;" class='form_create_report'>
+            <form method="POST" action="/send/" enctype="multipart/form-data" role="form" style="width: 900px;">
+                {% csrf_token %}
+
+                <div class="left-align">
+                    <p>{{ form.title.label }}:</p>
+                    {{ form.title }}
+                    <p>{{ form.text.label }}:</p>
+                    {{ form.text }}
+                </div>
+
+                <div class="left-align" style="padding-left: 20px;">
+                    <p>{{ form.viewers.label }}:</p>
+                    {{ form.viewers }}
+                </div>
+
+                <div style="clear: both"></div>
+
+                <div id="formset" data-formset-prefix="{{ formset.prefix }}" style="padding-top: 20px;">
+                    {{ formset.management_form }}
+                    <div data-formset-body>
+                        {% for form in formset.forms %}
+                            {% include 'report_file_form_set.html' %}
+                        {% endfor %}
+                    </div>
+                    <script type="form-template" data-formset-empty-form>
+                        {% with form=formset.empty_form %}
+                            {% include 'report_file_form_set.html' %}
+                        {% endwith %}
+                    </script>
+                    <a href="#" onclick="return false;" class="add-file" data-formset-add>
+                        <img src="{{ STATIC_URL }}img/add.gif" width="14" style="margin-right:5px;"/>Добавить файл
+                    </a>
+                </div>
+
+                <input type="submit" value="Создать" class='btn btn-info' style="margin-top: 20px;"/>
+            </form>
+         </div>
+    </div>
+ </div>
+{% endblock %}
+

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <div class="panel" style="border-color: #ccc">
+            <div class="panel-heading" style="font-size: 16px; padding-bottom: 0">
+                <b>{{ report.title }}</b>
+            </div>
+            <div class="panel-body" style="padding-top: 5px;font-size: 13px;">
+                {{ report.text|safe }}
+                {% if files %}
+                <div style="margin-top: 20px;">
+                    <b>Прикрепленные файлы:</b><br>
+                    {% for f in files %}
+                        <div>
+
+                            {% if f.is_infected %}
+                                <img src="{{ STATIC_URL }}img/bug.jpg" width="16" alt="Вредоносный файл" title="Вредоносный файл">
+                            {% endif %}
+                            <a href="{{ MEDIA_URL }}{{ f.media_file }}" target="_blank">{{ f.media_file }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="panel-footer" style="font-size:11px;color: #919191;padding-top: 5px;padding-bottom: 5px;">
+                Создано:&nbsp{{ report.creation_date }} |
+                Автор:&nbsp{{ report.creator }}
+                {% if report.viewers.all %}
+                    | Кому направлено:&nbsp
+                    {%  for viewers in report.viewers.all %}
+                        {{ viewers }}
+                    {% endfor %}
+                {% endif %}
+                {% if user.id == report.creator.id %}
+                    | <a href="/report/{{ report.id }}/edit/">Редактировать</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel" style="border-color: #ccc">
+            <div class="panel-heading" style="font-size: 16px;font-weight: bold;border-color: #ccc;">Комментарии</div>
+            <div class="panel-body">
+                {% for comment in report.comments %}
+                    {% include 'comment.html' %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="panel" style="border-color: #ccc">
+            <div class="panel-heading" style="border-color: #ccc;font-size: 16px;font-weight: bold;">Оставить комментарий</div>
+            <div class="panel-body">
+                <form method="POST" action="/report/{{ report.id }}/addcomment/">
+                    {% csrf_token %}
+                    <textarea class="form-control" name="comment_text" style="min-height: 200px;"></textarea>
+                    <div class="nav navbar-right">
+                        <ul style="list-style: none;padding-top: 20px;">
+                            <li>
+                                <input type="submit" class="btn btn-info" value="Добавить">
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
