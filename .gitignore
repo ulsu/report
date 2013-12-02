@@ -1,0 +1,7 @@
+resume/private_settings.py
+resume/local_settings.py
+deploy/
+files/
+.idea
+*.pyc
+*.db
